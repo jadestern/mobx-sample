@@ -4,17 +4,6 @@
   display: flex;
   width: 100vw;
   height: 100vh;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
-  .list {
-    margin-top: 1rem;
-    .item {
-      display: flex;
-      button {
-        flex: 1;
-        text-align: left;
-        cursor: pointer;
-      }
-    }
-  }
 }
