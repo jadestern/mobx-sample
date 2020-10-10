@@ -22,11 +22,31 @@ function App() {
       this.list = [...this.list, this.inputValue];
       this.inputValue = '';
     },
-    remove() {
-      // console.log(index);
-      // this.list = this.list.splice(index, 1);
+    remove(index: number) {
+      this.list = this.list.filter((_, _index:number) => _index !== index);
     },
+    edit(value: string, index:number) {
+      this.list = this.list.map(((item: string, _index: number) => {
+        if(_index === index) {
+          return value;
+        } else {
+          return item
+        }
+      }))
+    }
   }));
+
+  const removeItem = (index: number) => () => {
+    todo.remove(index);
+  };
+
+  const edit = (index: number) => () => {
+    const editValue = window.prompt('수정해보삼');
+
+    if(editValue) {
+      todo.edit(editValue, index);
+    }
+  };
 
   return (
     <Observer>
@@ -46,15 +66,16 @@ function App() {
               className="list"
               bordered
               dataSource={todo.list}
-              renderItem={item => (
+              renderItem={(item, index:number) => (
                 <List.Item
+                  className="item"
                   actions={[
                     <CloseCircleOutlined
-                      onClick={todo.remove}
+                      onClick={removeItem(index)}
                     />,
                   ]}
                 >
-                  {item}
+                  <button onClick={edit(index)}>{item}</button>
                 </List.Item>
               )}
             />
